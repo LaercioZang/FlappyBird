@@ -32,11 +32,11 @@ var replayclickable = false;
 
 // Sons
 var volume = 30;
-var soundJump = new buzz.sound("assets/audio/wing.wav");
-var soundScore = new buzz.sound("assets/audio/point.wav");
-var soundHit = new buzz.sound("assets/audio/hit.wav");
-var soundDie = new buzz.sound("assets/audio/die.wav");
-var soundSwoosh = new buzz.sound("assets/audio/swoosh.wav");
+var soundJump = new buzz.sound("assets/sounds/sfx_wing.ogg");
+var soundScore = new buzz.sound("assets/sounds/sfx_point.ogg");
+var soundHit = new buzz.sound("assets/sounds/sfx_hit.ogg");
+var soundDie = new buzz.sound("assets/sounds/sfx_die.ogg");
+var soundSwoosh = new buzz.sound("assets/sounds/sfx_swooshing.ogg");
 buzz.all().setVolume(volume);
 
 // Loop
@@ -135,7 +135,7 @@ function updatePlayer(player) {
     rotation = Math.min((velocity/10) * 90, 90);
 
     // Aplicando a rotação no CSS
-    $("#player").css({ rotate: rotation, top: position });
+    $(player).css({ rotate: rotation, top: position });
 }
 
 function gameloop() {
@@ -148,7 +148,7 @@ function gameloop() {
     // Update do player
     updatePlayer(player);
 
-    var box = document.getElementById("player").getBoundingClientRect();
+    var box = document.getElementById('player').getBoundingClientRect();
     var originwidth = 34.0;
     var originheight = 24.0;
 
@@ -176,9 +176,9 @@ function gameloop() {
 
     // Área dos próximos canos
     var nextpipe =pipes[0];
-    var nextpipeupper = nextpipe.children('.pipe-upper');
+    var nextpipeupper = nextpipe.children('.pipe_upper');
 
-    var pipetop = nextpipeupper.offset().top + nextpipeupper.heght;
+    var pipetop = nextpipeupper.offset().top + nextpipeupper.height;
     var pipeleft = nextpipeupper.offset().left - 2;
     var piperight = pipeleft + pipewidth;
     var pipebottom = pipetop + pipeheight;
@@ -195,7 +195,7 @@ function gameloop() {
     }
 
     // Passou o cano
-    if (boxleft > piperigth) {
+    if (boxleft > piperight) {
         pipes.splice(0,1);
 
         // Pontua ao pasar o cano
@@ -244,34 +244,28 @@ function setBigScore(erase){
     
     var digits = score.toString().split('');
     for(var i = 0; i <digits.length; i++)
-        elemscore.append("<img src='assets/sprites/" + digits[i] + ".png ' alt='" + digits[i] + " ' >");    
-}
+    elemscore.append("<img src='assets/font_big_" + digits[i] + ".png' alt='" + digits[i] + "'>");
+   }
 
 function setSmallScore(){
 
     var elemscore = $("#currentscore")
     elemscore.empty();
 
-    if(erase)
-        return;
-    
     var digits = score.toString().split('');
     for(var i = 0; i <digits.length; i++)
-        elemscore.append("<img src='assets/sprites/s" + digits[i] + ".png ' alt='" + digits[i] + " ' >");    
-}
+    elemscore.append("<img src='assets/font_small_" + digits[i] + ".png' alt='" + digits[i] + "'>");
+   }
 
 function setHighScore(){
 
     var elemscore = $("#highscore")
     elemscore.empty();
-
-    if(erase)
-        return;
     
     var digits = score.toString().split('');
     for(var i = 0; i <digits.length; i++)
-        elemscore.append("<img src='assets/sprites/" + digits[i] + ".png ' alt='" + digits[i] + " ' >");    
-}
+    elemscore.append("<img src='assets/font_small_" + digits[i] + ".png' alt='" + digits[i] + "'>");
+   }
 
 function setMedal(){
     var elemmedal = $("#medal");
@@ -280,13 +274,17 @@ function setMedal(){
     if(score < 10)
         return;
     
-    if(score >= 10)
-        medal = 'silver';
-    if(score >= 20)
-        medal = 'gold';
+   if(score >= 10)
+      medal = "bronze";
+   if(score >= 20)
+      medal = "silver";
+   if(score >= 30)
+      medal = "gold";
+   if(score >= 40)
+      medal = "platinum";
 
-    elemmedal.append("<img src='assets/sprites/medal-" + medal + ".png ' alt='" + digits[i] + " ' >");    
-
+   elemmedal.append('<img src="assets/medal_' + medal +'.png" alt="' + medal +'">');
+  
     return true;
 }
 
@@ -391,7 +389,7 @@ function updatePipes(){
     var constraint = 420 - pipeheight - (padding * 2);
     var topheight = Math.floor((Math.random()*constraint)+ padding);
     var bottomheight = (420 - pipeheight) - topheight;
-    var newpipe = $('<div class="pipe animated"><div class="pipe_upper" style: "height' +topheight + 'px; "></div><div class="pipe_lower" style="height ' + bottomheight + 'px;"</div></div>');
+    var newpipe = $('<div class="pipe animated"><div class="pipe_upper" style="height: ' + topheight + 'px;"></div><div class="pipe_lower" style="height: ' + bottomheight + 'px;"></div></div>');
     $("#flyarea-game").append(newpipe);
     pipes.push(newpipe);
 }
