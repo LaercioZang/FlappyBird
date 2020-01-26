@@ -1,14 +1,48 @@
 <!DOCTYPE html>
 
 <head>
-    <title>Flappy Bird</title>    
+    <title>Flappy Bird</title>
     <meta charset="UTF-8">
-    <meta name="viewport"
-    content="width=device-width, initial-scale=1.0, maximun-scale=1.0, user-scalable=0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximun-scale=1.0, user-scalable=0" />
+    <link rel="stylesheet" href="css/fb-main.css" />
+    <link rel="stylesheet" href="css/fb-reset.css" />
+
 </head>
 
 <body>
+    <main id="main-game">
 
+        <section id="screen-game">
+
+            <section id="background-game" class="animated">
+
+                <section id="flyarea-game">
+
+                    <div id="ceiling" class="animated"></div>
+                    <div id="player" class="bird animated"></div>
+                    <div id="bigscore"></div>
+                    <div id="splash"></div>
+                    <div id="scoreboard">
+                        <div id="medal"></div>
+                        <div id="currentscore"></div>
+                        <div id="highscore"></div>
+                        <div id="replay"><img src="assets/replay.png" height="70px" width="115" alt="replay"></div>
+                    </div>
+
+                </section>
+
+            </section>
+
+            <section id="footer-game" class="animated"></section>
+
+        </section>
+
+    </main>
+
+    <script src="js/fb-jquery.min.js"></script>
+    <script src="js/fb-jquery.transit.min.js"></script>
+    <script src="js/fb-buzz.min.js"></script>
+    <script src="js/fb-main.js"></script>
 </body>
 
 </html>
