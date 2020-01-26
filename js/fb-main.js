@@ -139,68 +139,79 @@ function updatePlayer(player) {
 }
 
 function gameloop() {
-    var player = $("#player");
-
-    // Incrementar a velocidade e a posição do player
-    velocity += gravity;
-    position += velocity;
-
-    // Update do player
-    updatePlayer(player);
-
-    var box = document.getElementById('player').getBoundingClientRect();
-    var originwidth = 34.0;
-    var originheight = 24.0;
-
-    var boxwidth = originwidth - (Math.sin(Math.abs(rotation) / 90) * 8);
-    var boxheight = (originheight + box.height) / 2;
-    var boxleft = ((box.width - boxwidth) / 2) + box.left;
-    var boxtop = ((box.height - boxheight) / 2) + box.top;
-    var boxright = boxleft + boxwidth;
-    var boxbottom = boxtop + boxheight;
-
-    // Se acertar o footer morre
-    if (box.bottom >= $("#footer-game").offset().top) {
-        playerDead();
-        return;
-    }
-
-    // Se tentar passar pelo topo zera a posição
-    var ceiling = $("#ceiling");
-    if (boxtop <= (ceiling.offset().top + ceiling.height()))
-        position = 0;
-
-    // Se não houver nenhum cano
-    if (pipes[0] == null)
-        return;
-
-    // Área dos próximos canos
-    var nextpipe =pipes[0];
-    var nextpipeupper = nextpipe.children('.pipe_upper');
-
-    var pipetop = nextpipeupper.offset().top + nextpipeupper.height;
-    var pipeleft = nextpipeupper.offset().left - 2;
-    var piperight = pipeleft + pipewidth;
-    var pipebottom = pipetop + pipeheight;
-
-    // Se cair dentro do cano
-    if (boxright > pipeleft) {
-        if (boxtop > pipetop && boxbottom < pipebottom) {
-
-        }
-        else {
-            playerDead();
-            return;
-        }
-    }
-
-    // Passou o cano
-    if (boxleft > piperight) {
-        pipes.splice(0,1);
-
-        // Pontua ao pasar o cano
-        playerScore();
-    }
+   var player = $("#player");
+      
+   // Upar a posição e velocidade do player 
+   velocity += gravity;
+   position += velocity;
+   
+   // Aplicar os novos valores do player
+   updatePlayer(player);
+   
+   // Criar o hack de bouding box para o player
+   var box = document.getElementById('player').getBoundingClientRect();
+   var origwidth = 34.0;
+   var origheight = 24.0;
+   
+   var boxwidth = origwidth - (Math.sin(Math.abs(rotation) / 90) * 8);
+   var boxheight = (origheight + box.height) / 2;
+   var boxleft = ((box.width - boxwidth) / 2) + box.left;
+   var boxtop = ((box.height - boxheight) / 2) + box.top;
+   var boxright = boxleft + boxwidth;
+   var boxbottom = boxtop + boxheight;
+  
+   // Se acertar o footer, o player morre e retorna o jogo
+   if(box.bottom >= $("#footer-game").offset().top)
+   {
+      playerDead();
+      return;
+   }
+   
+   // Se tentar passar pelo topo, zera a posição dele no topo
+   var ceiling = $("#ceiling");
+   if(boxtop <= (ceiling.offset().top + ceiling.height()))
+      position = 0;
+   
+   // Se não houver nenhum cano no jogo retorna
+   if(pipes[0] == null)
+      return;
+   
+   // Determina a área para os próximos canos
+   var nextpipe = pipes[0];
+   var nextpipeupper = nextpipe.children(".pipe_upper");
+   
+   var pipetop = nextpipeupper.offset().top + nextpipeupper.height();
+   var pipeleft = nextpipeupper.offset().left - 2; // Por algum motivo ele começa no deslocamento dos tubos internos , e não os tubos exteriores 
+   var piperight = pipeleft + pipewidth;
+   var pipebottom = pipetop + pipeheight;
+   
+   // O que acontece se cair dentro do tubo
+   if(boxright > pipeleft)
+   {
+      // Estamos dentro dos tubos, já passamos pelo tubo superior e inferior?
+      if(boxtop > pipetop && boxbottom < pipebottom)
+      {
+         // sim, estamos dentro dos limites!
+         
+      }
+      else
+      {
+         // não podemos pular estando dentro do cano, você morreu! return game!
+         playerDead();
+         return;
+      }
+   }
+   
+   
+   // Já passamos o cano?
+   if(boxleft > piperight)
+   {
+      // se sim, remove e aparece outro
+      pipes.splice(0, 1);
+      
+      // pontua a partir do momento que vai passando
+      playerScore();
+   }
 
 }
 
