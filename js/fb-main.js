@@ -1,4 +1,4 @@
-// ----------------- VARIÁVEIS -----------------    
+// --------------------------------------------------- VARIÁVEIS ---------------------------------------------------  
 
 // Depuração
 var debugmode = false;
@@ -43,7 +43,8 @@ buzz.all().setVolume(volume);
 var loopGameloop;
 var loopPipeloop;
 
-// ----------------- FUNÇÕES -----------------
+// --------------------------------------------------- FUNÇÕES --------------------------------------------------- 
+
 $(document).ready(function() {
     if (window.location.search == "?debug")
         deugmode = true;
@@ -102,8 +103,6 @@ function showSplash() {
     // Splash Screen aparecer
     $("#splash").transition({ opacity: 1 }, 2000, 'ease');
 }
-
-// Start
 
 function startGame() {
     // Estado do jogo
@@ -249,7 +248,7 @@ function setBigScore(erase) {
 
     var digits = score.toString().split('');
     for (var i = 0; i < digits.length; i++)
-        elemscore.append("<img src='assets/font_big_" + digits[i] + ".png' alt='" + digits[i] + "'>");
+        elemscore.append("<img src='assets/sprites/font_big_" + digits[i] + ".png' alt='" + digits[i] + "'>");
 }
 
 function setSmallScore() {
@@ -259,7 +258,7 @@ function setSmallScore() {
 
     var digits = score.toString().split('');
     for (var i = 0; i < digits.length; i++)
-        elemscore.append("<img src='assets/font_small_" + digits[i] + ".png' alt='" + digits[i] + "'>");
+        elemscore.append("<img src='assets/sprites/font_small_" + digits[i] + ".png' alt='" + digits[i] + "'>");
 }
 
 function setHighScore() {
@@ -269,7 +268,7 @@ function setHighScore() {
 
     var digits = score.toString().split('');
     for (var i = 0; i < digits.length; i++)
-        elemscore.append("<img src='assets/font_small_" + digits[i] + ".png' alt='" + digits[i] + "'>");
+        elemscore.append("<img src='assets/sprites/font_small_" + digits[i] + ".png' alt='" + digits[i] + "'>");
 }
 
 function setMedal() {
@@ -288,7 +287,7 @@ function setMedal() {
     if (score >= 40)
         medal = "platinum";
 
-    elemmedal.append('<img src="assets/medal_' + medal + '.png" alt="' + medal + '">');
+    elemmedal.append('<img src="assets/sprites/medal_' + medal + '.png" alt="' + medal + '">');
 
     return true;
 }
